@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import TourForm from "./TourForm";
 import { newTour } from "../../../models/tourModel";
 
-function ManageTourPage({ tours, loadTours, saveTour, ...props }) {
+function ManageTourPage({ tours, loadTours, saveTour, history, ...props }) {
   const [tour, setTour] = useState({ ...props.tour });
   const [errors, setErrors] = useState({});
 
@@ -30,10 +30,9 @@ function ManageTourPage({ tours, loadTours, saveTour, ...props }) {
 
   function handleSave(event) {
     event.preventDefault();
-    saveTour(tour);
-    // .then(() => {
-    //   history.push("/courses");
-    // });
+    saveTour(tour).then(() => {
+      history.push("/tours");
+    });
   }
 
   return (
@@ -51,21 +50,20 @@ ManageTourPage.propTypes = {
   tours: PropTypes.array.isRequired,
   loadTours: PropTypes.func.isRequired,
   saveTour: PropTypes.func.isRequired,
-  // history: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-// export function getCourseBySlug(courses, slug) {
-//   return courses.find((course) => course.slug === slug) || null;
-// }
+export function getTourByID(tours, id) {
+  return tours.find((tour) => tour.id.toString() === id) || null;
+}
 
 function mapStateToProps(state, ownProps) {
-  // const slug = ownProps.match.params.slug;
-  // const course =
-  //   slug && state.courses.length > 0
-  //     ? getCourseBySlug(state.courses, slug)
-  //     : newCourse;
+  const id = ownProps.match.params.id;
+  const tour =
+    id && state.tours.length > 0 ? getTourByID(state.tours, id) : newTour;
+  console.log("test: " + tour);
   return {
-    tour: newTour,
+    tour,
     tours: state.tours,
   };
 }

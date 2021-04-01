@@ -2,7 +2,7 @@ import * as types from "./actionTypes";
 import * as tourApi from "../../api/tourApi";
 //loads tours when the app initiallt loads
 
-export function loadCourseSuccess(tours) {
+export function loadTourSuccess(tours) {
   return { type: types.LOAD_TOURS_SUCCESS, tours };
 }
 
@@ -20,7 +20,7 @@ export function loadTours() {
     return tourApi
       .getTours()
       .then((tours) => {
-        dispatch(loadCourseSuccess(tours));
+        dispatch(loadTourSuccess(tours));
       })
       .catch((error) => {
         throw error;
