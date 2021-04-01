@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { loadTours } from "../../redux/actions/tourActions";
+import { loadTours, saveTour } from "../../redux/actions/tourActions";
 import PropTypes from "prop-types";
 import TourForm from "./TourForm";
-import * as models from "../../../models/tourModel";
+import { newTour } from "../../../models/tourModel";
 
-function ManageTourPage({ tours, loadTours, ...props }) {
+function ManageTourPage({ tours, loadTours, saveTour, ...props }) {
   const [tour, setTour] = useState({ ...props.tour });
   const [errors, setErrors] = useState({});
 
@@ -28,21 +28,29 @@ function ManageTourPage({ tours, loadTours, ...props }) {
     }));
   }
 
-  // function handleSave(event) {
-  //   event.preventDefault();
-  //   saveCourse(course).then(() => {
-  //     history.push("/courses");
-  //   });
-  // }
+  function handleSave(event) {
+    event.preventDefault();
+    saveTour(tour);
+    // .then(() => {
+    //   history.push("/courses");
+    // });
+  }
 
-  return <TourForm tour={tour} errors={errors} onChange={handleChange} />;
+  return (
+    <TourForm
+      tour={tour}
+      errors={errors}
+      onChange={handleChange}
+      onSave={handleSave}
+    />
+  );
 }
 
 ManageTourPage.propTypes = {
   tour: PropTypes.object.isRequired,
   tours: PropTypes.array.isRequired,
   loadTours: PropTypes.func.isRequired,
-  //saveCourse: PropTypes.func.isRequired,
+  saveTour: PropTypes.func.isRequired,
   // history: PropTypes.object.isRequired,
 };
 
@@ -57,14 +65,14 @@ function mapStateToProps(state, ownProps) {
   //     ? getCourseBySlug(state.courses, slug)
   //     : newCourse;
   return {
-    tour: models.newTour,
+    tour: newTour,
     tours: state.tours,
   };
 }
 
 const mapDispatchToProps = {
   loadTours,
-  //saveCourse,
+  saveTour,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTourPage);

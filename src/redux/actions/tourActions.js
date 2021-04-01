@@ -2,12 +2,16 @@ import * as types from "./actionTypes";
 import * as tourApi from "../../api/tourApi";
 //loads tours when the app initiallt loads
 
-export function createTour(tour) {
-  return { type: types.CREATE_TOUR, tour };
-}
-
 export function loadCourseSuccess(tours) {
   return { type: types.LOAD_TOURS_SUCCESS, tours };
+}
+
+export function updateTourSuccess(tour) {
+  return { type: types.UPDATE_TOUR_SUCCESS, tour };
+}
+
+export function createTourSuccess(tour) {
+  return { type: types.CREATE_TOUR_SUCCESS, tour };
 }
 
 //async calls
@@ -23,3 +27,33 @@ export function loadTours() {
       });
   };
 }
+
+//save
+export function saveTour(tour) {
+  return function (dispatch) {
+    return tourApi
+      .saveTour(tour)
+      .then((savedTour) => {
+        tour.id
+          ? dispatch(updateTourSuccess(savedTour))
+          : dispatch(createTourSuccess(savedTour));
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
+}
+
+// export function saveTour(tour) {
+//   debugger;
+//   return function (dispatch) {
+//     return tourApi
+//       .saveTour(tour)
+//       .then((savedTour) => {
+//         dispatch(createTourSuccess(savedTour));
+//       })
+//       .catch((error) => {
+//         throw error;
+//       });
+//   };
+// }
