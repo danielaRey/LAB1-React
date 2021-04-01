@@ -1,5 +1,6 @@
 import * as types from "./actionTypes";
 import * as tourApi from "../../api/tourApi";
+import { beginApiCall } from "./apiStatusActions";
 //loads tours when the app initiallt loads
 
 export function loadTourSuccess(tours) {
@@ -17,6 +18,7 @@ export function createTourSuccess(tour) {
 //async calls
 export function loadTours() {
   return function (dispatch) {
+    dispatch(beginApiCall());
     return tourApi
       .getTours()
       .then((tours) => {
@@ -31,6 +33,7 @@ export function loadTours() {
 //save
 export function saveTour(tour) {
   return function (dispatch) {
+    dispatch(beginApiCall());
     return tourApi
       .saveTour(tour)
       .then((savedTour) => {

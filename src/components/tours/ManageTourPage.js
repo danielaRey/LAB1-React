@@ -4,10 +4,12 @@ import { loadTours, saveTour } from "../../redux/actions/tourActions";
 import PropTypes from "prop-types";
 import TourForm from "./TourForm";
 import { newTour } from "../../../models/tourModel";
+import { toast } from "react-toastify";
 
 function ManageTourPage({ tours, loadTours, saveTour, history, ...props }) {
   const [tour, setTour] = useState({ ...props.tour });
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (tours.length === 0) {
@@ -30,7 +32,9 @@ function ManageTourPage({ tours, loadTours, saveTour, history, ...props }) {
 
   function handleSave(event) {
     event.preventDefault();
+    setSaving(true);
     saveTour(tour).then(() => {
+      toast.success("Tour guardado.");
       history.push("/tours");
     });
   }
@@ -41,6 +45,7 @@ function ManageTourPage({ tours, loadTours, saveTour, history, ...props }) {
       errors={errors}
       onChange={handleChange}
       onSave={handleSave}
+      saving={saving}
     />
   );
 }
