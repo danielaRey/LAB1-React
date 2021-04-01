@@ -1,44 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import * as tourActions from "../../redux/actions/tourActions";
+import { loadTours } from "../../redux/actions/tourActions";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
+import TourForm from "./TourForm";
+import * as models from "../../../models/tourModel";
 
-class ManageTourPage extends React.Component {
-  componentDidMount() {
-    //stop calling api every load
-    //if (this.props.tours.length ===0 ){}
-    this.props.actions.loadTours().catch((err) => {
-      alert("loading tours failed" + err);
-    });
+function ManageTourPage({ tours, loadTours, ...props }) {
+  const [tour, setTour] = useState({ ...props.tour });
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (tours.length === 0) {
+      loadTours().catch((error) => {
+        alert("Loading tours failed" + error);
+      });
+    } else {
+      setTour({ ...props.tour });
+    }
+  }, [props.tour]);
+
+  function handleChange(event) {
+    //[name]: name === "authorId" ? parseInt(value, 10) : value,
+    const { name, value } = event.target;
+    setTour((prevTour) => ({
+      ...prevTour,
+      [name]: value,
+    }));
   }
-  render() {
-    return (
-      <>
-        <h2>Administración Tour</h2>
-      </>
-    );
-  }
+
+  // function handleSave(event) {
+  //   event.preventDefault();
+  //   saveCourse(course).then(() => {
+  //     history.push("/courses");
+  //   });
+  // }
+
+  return <TourForm tour={tour} errors={errors} onChange={handleChange} />;
 }
 
 ManageTourPage.propTypes = {
+  tour: PropTypes.object.isRequired,
   tours: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired,
+  loadTours: PropTypes.func.isRequired,
+  //saveCourse: PropTypes.func.isRequired,
+  // history: PropTypes.object.isRequired,
 };
 
-//what part pf the state is passed to our components via props
-function mapStateToProps(state) {
+// export function getCourseBySlug(courses, slug) {
+//   return courses.find((course) => course.slug === slug) || null;
+// }
+
+function mapStateToProps(state, ownProps) {
+  // const slug = ownProps.match.params.slug;
+  // const course =
+  //   slug && state.courses.length > 0
+  //     ? getCourseBySlug(state.courses, slug)
+  //     : newCourse;
   return {
+    tour: models.newTour,
     tours: state.tours,
   };
 }
 
-//what actions we want to expose in our components via props
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(tourActions, dispatch),
-  };
-}
+const mapDispatchToProps = {
+  loadTours,
+  //saveCourse,
+};
 
-//two functions call
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTourPage);
