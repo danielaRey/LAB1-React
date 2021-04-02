@@ -6,10 +6,9 @@ const TourList = ({ tours }) => (
   <table className="table">
     <thead>
       <tr>
-        <th />
         <th>Nombre</th>
         <th>Categoría</th>
-        <th>Fecha Ida</th>
+        <th>Fecha</th>
       </tr>
     </thead>
     <tbody>
@@ -17,15 +16,7 @@ const TourList = ({ tours }) => (
         return (
           <tr key={tour.id}>
             <td>
-              <a
-                className="btn btn-light"
-                href={"http://pluralsight.com/courses/" + tour.slug}
-              >
-                Watch
-              </a>
-            </td>
-            <td>
-              <Link to={"/course/" + tour.slug}>{tour.nombre}</Link>
+              <Link to={"/tour/" + tour.id}>{tour.nombre}</Link>
             </td>
             <td>{tour.categoria}</td>
             <td>{tour.fechaIda}</td>
