@@ -5,6 +5,7 @@ import AboutPage from "./about/AboutPage";
 import Header from "./common/Header";
 import PageNotFound from "./PageNotFound";
 import ToursPage from "./tours/ToursPage";
+import ToursPageSearch from "./toursUsers/ToursPageSearch";
 import ManageTourPage from "./tours/ManageTourPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,6 +17,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/about" component={AboutPage} />
+        <Route path="/tours/search" component={ToursPageSearch} />
         <Route path="/tours" component={ToursPage} />
         <Route path="/tour/:id" component={ManageTourPage} />
         <Route path="/tour" component={ManageTourPage} />
