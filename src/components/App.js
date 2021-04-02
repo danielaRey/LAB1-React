@@ -9,6 +9,8 @@ import ToursPageSearch from "./toursUsers/ToursPageSearch";
 import ManageTourPage from "./tours/ManageTourPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TourListCard from "./toursUsers/TourListCard";
+import TourCardManage from "./toursUsers/TourCardManage";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/tours/search" component={ToursPageSearch} />
+        <Route path="/tours-card" component={TourListCard} />
+        <Route path="/tours/:pais/:ida/:vuelta" component={TourCardManage} />
         <Route path="/tours" component={ToursPage} />
         <Route path="/tour/:id" component={ManageTourPage} />
         <Route path="/tour" component={ManageTourPage} />

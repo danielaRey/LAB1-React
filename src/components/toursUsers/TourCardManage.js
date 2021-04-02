@@ -39,44 +39,13 @@ function ToursPageSearch(props) {
     setCountryListDefault(filtered);
   }
 
-  console.log(startDate);
+  function handleSelect(date) {
+    console.log(date); // native Date object
+  }
 
   return (
     <>
-      {flagVisibleTours ? (
-        <>
-          <Redirect to={`/tours/${input}/${startDate}/${endDate}`} />
-        </>
-      ) : (
-        <>
-          <h2>Tours Búsqueda</h2>
-          <input
-            placeholder={"nombre"}
-            onChange={(e) => updateInput(e.target.value)}
-          />
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            minDate={new Date()}
-            isClearable
-            placeholderText="Ida"
-          />
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            minDate={new Date()}
-            isClearable
-            placeholderText="Vuelta"
-          />
-          <button
-            style={{ marginBottom: 20 }}
-            onClick={search}
-            className="btn btn-primary add-tour"
-          >
-            Buscar Tour
-          </button>
-        </>
-      )}
+      <TourList tours={props.tours}></TourList>
     </>
   );
 }
@@ -88,9 +57,17 @@ ToursPageSearch.propTypes = {
 };
 
 //what part pf the state is passed to our components via props
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const pais = ownProps.match.params.pais;
+  const ida = ownProps.match.params.ida;
+  const vuelta = ownProps.match.params.vuelta;
+  const filtered = state.tours.filter((tour) => {
+    return tour.nombre.toLowerCase().includes(pais.toLowerCase());
+  });
+  debugger;
+  //state.tours,
   return {
-    tours: state.tours,
+    tours: filtered,
     loading: state.apiCallsInProgress > 0,
   };
 }
