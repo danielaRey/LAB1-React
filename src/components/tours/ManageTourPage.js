@@ -30,13 +30,31 @@ function ManageTourPage({ tours, loadTours, saveTour, history, ...props }) {
     }));
   }
 
+  function formIsValid() {
+    const { nombre, categoria } = tour;
+    const errors = {};
+
+    if (!nombre) errors.nombre = "Nombre es requerido";
+    if (!categoria) errors.categoria = "Categoría es requerida.";
+
+    setErrors(errors);
+    // Form is valid if the errors object still has no properties
+    return Object.keys(errors).length === 0;
+  }
+
   function handleSave(event) {
     event.preventDefault();
+    if (!formIsValid()) return;
     setSaving(true);
-    saveTour(tour).then(() => {
-      toast.success("Tour guardado.");
-      history.push("/tours");
-    });
+    saveTour(tour)
+      .then(() => {
+        toast.success("Tour guardado.");
+        history.push("/tours");
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
   }
 
   return (
