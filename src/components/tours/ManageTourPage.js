@@ -84,7 +84,6 @@ function mapStateToProps(state, ownProps) {
   const id = ownProps.match.params.id;
   const tour =
     id && state.tours.length > 0 ? getTourByID(state.tours, id) : newTour;
-  console.log("test: " + tour);
   return {
     tour,
     tours: state.tours,

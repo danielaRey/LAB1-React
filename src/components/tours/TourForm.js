@@ -27,6 +27,63 @@ const TourForm = ({ tour, onSave, onChange, saving = false, errors = {} }) => {
         error={errors.categoria}
       />
 
+      <TextInput
+        name="duracion"
+        label="Duración"
+        value={tour.duracion}
+        onChange={onChange}
+        error={errors.duracion}
+      />
+
+      <TextInput
+        name="precio"
+        typeInput="number"
+        label="Precio"
+        value={tour.precio}
+        onChange={onChange}
+        error={errors.precio}
+      />
+
+      <TextInput
+        name="pais"
+        label="País"
+        value={tour.pais}
+        onChange={onChange}
+        error={errors.pais}
+      />
+
+      <TextInput
+        name="descripcion"
+        label="Descripción"
+        value={tour.descripcion}
+        onChange={onChange}
+        error={errors.descripcion}
+      />
+
+      <TextInput
+        name="indicacionesGenerales"
+        label="Indicaciones Generales"
+        value={tour.indicacionesGenerales}
+        onChange={onChange}
+        error={errors.indicacionesGenerales}
+      />
+
+      <TextInput
+        name="actividadesIncluidas"
+        label="Actividades Incluidas"
+        value={tour.actividadesIncluidas}
+        onChange={onChange}
+        error={errors.actividadesIncluidas}
+      />
+
+      <TextInput
+        name="actividadesNoIncluidas"
+        label="Actividades No Incluidas"
+        value={tour.actividadesNoIncluidas}
+        onChange={onChange}
+        error={errors.actividadesNoIncluidas}
+      />
+
       <button type="submit" disabled={saving} className="btn btn-primary">
         {saving ? "Guardando..." : "Guardar"}
       </button>

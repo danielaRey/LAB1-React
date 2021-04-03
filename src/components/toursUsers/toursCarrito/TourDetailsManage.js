@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { loadTours } from "../../redux/actions/tourActions";
-import { loadFotos } from "../../redux/actions/fotoActions";
-import { loadReviews } from "../../redux/actions/reviewActions";
+import { loadTours } from "../../../redux/actions/tourActions";
+import { loadFotos } from "../../../redux/actions/fotoActions";
+import { loadReviews } from "../../../redux/actions/reviewActions";
 import PropTypes from "prop-types";
-import TourList from "./TourListCard";
+import TourDetails from "./TourDetails";
 import "react-datepicker/dist/react-datepicker.css";
 
 function TourCardManage({ loadTours, loadFotos, loadReviews, ...props }) {
@@ -33,11 +33,7 @@ function TourCardManage({ loadTours, loadFotos, loadReviews, ...props }) {
 
   return (
     <>
-      <TourList
-        tours={props.tours}
-        fotos={props.fotos}
-        reviews={props.reviews}
-      ></TourList>
+      <TourDetails></TourDetails>
     </>
   );
 }
@@ -57,9 +53,6 @@ function mapStateToProps(state, ownProps) {
   const pais = ownProps.match.params.pais;
   const ida = ownProps.match.params.ida;
   const vuelta = ownProps.match.params.vuelta;
-  const filtered = state.tours.filter((tour) => {
-    return tour.nombre.toLowerCase().includes(pais.toLowerCase());
-  });
 
   debugger;
   // let tours =
@@ -82,7 +75,7 @@ function mapStateToProps(state, ownProps) {
   return {
     reviews: state.reviews,
     fotos: state.fotos,
-    tours: filtered,
+    tours: state.tours,
     loading: state.apiCallsInProgress > 0,
     // tours:
     //   state.fotos.length === 0
