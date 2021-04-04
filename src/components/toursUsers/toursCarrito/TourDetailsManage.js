@@ -31,9 +31,17 @@ function TourCardManage({ loadTours, loadFotos, loadReviews, ...props }) {
     }
   }, [props.foto]);
 
+  const filterFotos = props.fotos.filter(
+    (foto) => foto.tourID.toString() === props.match.params.id
+  );
+
+  const filterReviews = props.reviews.filter(
+    (review) => review.tourID.toString() === props.match.params.id
+  );
+
   return (
     <>
-      <TourDetails></TourDetails>
+      <TourDetails fotos={filterFotos} reviews={filterReviews}></TourDetails>
     </>
   );
 }
@@ -53,25 +61,12 @@ function mapStateToProps(state, ownProps) {
   const pais = ownProps.match.params.pais;
   const ida = ownProps.match.params.ida;
   const vuelta = ownProps.match.params.vuelta;
-
-  debugger;
-  // let tours =
-  //   state.fotos.length === 0
-  //     ? []
-  //     : filtered.map((tour) => {
-  //         return {
-  //           ...tour,
-  //           fotoPath: state.fotos.find(
-  //             (f) => f.tourID === tour.id && f.nombre === "food lunch"
-  //           ).imagen,
-  //         };
-  //       });
-  // if (state.fotos.length === 0) {
-  //   console.log("ftoos 0");
-  // } else {
-  //   console.log("hola como stas");
-  // }
-
+  const tourID = ownProps.match.params.id;
+  const fotosFilter = state.fotos.filter((foto) => {
+    foto.tourID.toString() === tourID;
+  });
+  console.log("***********");
+  console.log(fotosFilter.length);
   return {
     reviews: state.reviews,
     fotos: state.fotos,
