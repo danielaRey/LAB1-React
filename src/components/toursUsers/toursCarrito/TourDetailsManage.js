@@ -7,6 +7,7 @@ import { loadClientes } from "../../../redux/actions/clienteActions";
 import PropTypes from "prop-types";
 import TourDetails from "./TourDetails";
 import "react-datepicker/dist/react-datepicker.css";
+import { newTour } from "../../../../models/tourModel";
 
 function TourCardManage({
   loadTours,
@@ -57,7 +58,7 @@ function TourCardManage({
       <TourDetails
         fotos={filterFotos}
         reviews={filterReviews}
-        clientes={props.clientes}
+        tour={props.tour}
       ></TourDetails>
     </>
   );
@@ -74,17 +75,18 @@ TourCardManage.propTypes = {
   loadClientes: PropTypes.func.isRequired,
 };
 
+export function getTourByID(tours, id) {
+  return tours.find((tour) => tour.id.toString() === id) || null;
+}
+
 //what part pf the state is passed to our components via props
 function mapStateToProps(state, ownProps) {
-  const pais = ownProps.match.params.pais;
-  const ida = ownProps.match.params.ida;
-  const vuelta = ownProps.match.params.vuelta;
   const tourID = ownProps.match.params.id;
-  const fotosFilter = state.fotos.filter((foto) => {
-    foto.tourID.toString() === tourID;
-  });
-  console.log("***********");
-  console.log(fotosFilter.length);
+  const tour =
+    tourID && state.tours.length > 0
+      ? getTourByID(state.tours, tourID)
+      : newTour;
+  debugger;
   return {
     reviews:
       state.clientes.length === 0
@@ -105,6 +107,7 @@ function mapStateToProps(state, ownProps) {
     clientes: state.clientes,
     fotos: state.fotos,
     tours: state.tours,
+    tour,
     loading: state.apiCallsInProgress > 0,
     // tours:
     //   state.fotos.length === 0

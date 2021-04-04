@@ -28,6 +28,11 @@ const TourDetails = (props) => {
           );
         })}
       </Carousel>
+      <p>{props.tour.descripcion}</p>
+      <p>{props.tour.horaInicio}</p>
+      <p>{props.tour.indicacionesGenerales}</p>
+      <p>{props.tour.actividadesIncluidas}</p>
+      <p>{props.tour.actividadesNoIncluidas}</p>
       {props.reviews.map((review) => {
         return (
           <div key={review.id}>
