@@ -5,5 +5,6 @@ export default {
   favoritos: [],
   reservaciones: [],
   reviews: [],
+  clientes: [],
   apiCallsInProgress: 0,
 };
