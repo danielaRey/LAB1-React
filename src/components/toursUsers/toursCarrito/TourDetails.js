@@ -32,6 +32,7 @@ const TourDetails = (props) => {
         return (
           <div key={review.id}>
             <p>{review.calificacion}</p>
+            <p>{review.clienteNombre}</p>
             <p>{review.comentario}</p>
           </div>
         );

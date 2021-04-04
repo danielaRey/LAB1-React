@@ -3,11 +3,18 @@ import { connect } from "react-redux";
 import { loadTours } from "../../../redux/actions/tourActions";
 import { loadFotos } from "../../../redux/actions/fotoActions";
 import { loadReviews } from "../../../redux/actions/reviewActions";
+import { loadClientes } from "../../../redux/actions/clienteActions";
 import PropTypes from "prop-types";
 import TourDetails from "./TourDetails";
 import "react-datepicker/dist/react-datepicker.css";
 
-function TourCardManage({ loadTours, loadFotos, loadReviews, ...props }) {
+function TourCardManage({
+  loadTours,
+  loadFotos,
+  loadReviews,
+  loadClientes,
+  ...props
+}) {
   const [calificacionEstrellas, setCalificacionEstrellas] = useState(0);
   const [cantidadReviews, setCantidadReviews] = useState(0);
 
@@ -29,6 +36,12 @@ function TourCardManage({ loadTours, loadFotos, loadReviews, ...props }) {
         alert("loading tours failed" + err);
       });
     }
+
+    if (props.clientes.length === 0) {
+      loadClientes().catch((err) => {
+        alert("loading clients failed" + err);
+      });
+    }
   }, [props.foto]);
 
   const filterFotos = props.fotos.filter(
@@ -41,7 +54,11 @@ function TourCardManage({ loadTours, loadFotos, loadReviews, ...props }) {
 
   return (
     <>
-      <TourDetails fotos={filterFotos} reviews={filterReviews}></TourDetails>
+      <TourDetails
+        fotos={filterFotos}
+        reviews={filterReviews}
+        clientes={props.clientes}
+      ></TourDetails>
     </>
   );
 }
@@ -54,6 +71,7 @@ TourCardManage.propTypes = {
   loadTours: PropTypes.func.isRequired,
   loadFotos: PropTypes.func.isRequired,
   loadReviews: PropTypes.func.isRequired,
+  loadClientes: PropTypes.func.isRequired,
 };
 
 //what part pf the state is passed to our components via props
@@ -68,7 +86,23 @@ function mapStateToProps(state, ownProps) {
   console.log("***********");
   console.log(fotosFilter.length);
   return {
-    reviews: state.reviews,
+    reviews:
+      state.clientes.length === 0
+        ? []
+        : state.reviews.map((review) => {
+            return {
+              ...review,
+              clienteNombre:
+                state.clientes.find(
+                  (c) => c.identificacion === review.clienteIdentificacion
+                ).nombre +
+                " " +
+                state.clientes.find(
+                  (c) => c.identificacion === review.clienteIdentificacion
+                ).apellidos,
+            };
+          }),
+    clientes: state.clientes,
     fotos: state.fotos,
     tours: state.tours,
     loading: state.apiCallsInProgress > 0,
@@ -91,6 +125,7 @@ const mapDispatchToProps = {
   loadTours,
   loadFotos,
   loadReviews,
+  loadClientes,
   //actions: bindActionCreators(tourActions, dispatch),
 };
 
