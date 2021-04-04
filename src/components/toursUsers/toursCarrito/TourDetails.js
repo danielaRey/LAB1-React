@@ -4,15 +4,12 @@ import alv from "../../../../imagenes/tabla4.png";
 import ReactDOM from "react-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+import { NavLink } from "react-router-dom";
+import TextInput from "../../common/TextInput";
 
 const TourDetails = (props) => {
-  // function amountReviewsTourID() {
-  //   const filterReviews = props.reviews.filter(
-  //     (review) => review.tourID == props.tourID
-  //   );
-  //   return filterReviews.length;
-  // }
-
+  const tokenExists = localStorage.getItem("tokenmovt");
+  debugger;
   return (
     <>
       <Carousel infiniteLoop={true}>
@@ -33,6 +30,33 @@ const TourDetails = (props) => {
       <p>{props.tour.indicacionesGenerales}</p>
       <p>{props.tour.actividadesIncluidas}</p>
       <p>{props.tour.actividadesNoIncluidas}</p>
+      {tokenExists ? (
+        <div>
+          <p>HOLA TOKEN EXISTS</p>
+          <p>precio: {props.tour.precio}</p>
+          <form onSubmit={props.onSave}>
+            <TextInput
+              name="cantidad"
+              typeInput="number"
+              label="Cantidad"
+              value={props.reservacion.cantidad}
+              onChange={props.onChange}
+              error={props.errors.cantidad}
+            />
+            <button
+              type="submit"
+              disabled={props.saving}
+              className="btn btn-primary"
+            >
+              {props.saving ? "Guardando..." : "Reserva ya!"}
+            </button>
+          </form>
+          <p>reservacion: {props.reservacion.cantidad}</p>
+          <NavLink to="/tours/carrito/">Reserva ya!</NavLink>
+        </div>
+      ) : (
+        <p>ADIOS TOKEN NO EXISTE</p>
+      )}
       {props.reviews.map((review) => {
         return (
           <div key={review.id}>

@@ -3,9 +3,13 @@ import PropTypes from "prop-types";
 import { handleResponse, handleError } from "../../api/apiUtils";
 import { Redirect } from "react-router-dom";
 
-export default function Login() {
+export default function Login(props) {
   const [correo, setCorreo] = useState();
   const [password, setPassword] = useState();
+
+  function refreshPage() {
+    //window.location.reload();
+  }
 
   function loginUser(credentials) {
     console.log(credentials);
@@ -18,7 +22,10 @@ export default function Login() {
         debugger;
         let a = data.responseText;
         data.json().then((obj) => {
-          localStorage.setItem("tokenmovt", obj);
+          const stringToken = JSON.stringify(obj);
+          localStorage.setItem("tokenmovt", stringToken);
+
+          //localStorage.setItem("tokenmovt", obj);
         });
       })
       .catch(handleError);
@@ -30,6 +37,7 @@ export default function Login() {
       correo,
       password,
     });
+    props.history.push("/");
   };
 
   const tokenExists = localStorage.getItem("tokenmovt");
@@ -53,7 +61,9 @@ export default function Login() {
               />
             </label>
             <div>
-              <button type="submit">Submit</button>
+              <button type="submit" onClick={refreshPage}>
+                Submit
+              </button>
             </div>
           </form>
         </div>

@@ -7,8 +7,16 @@ const newTour = {
   indicacionesGenerales: "",
   actividadesIncluidas: "",
   actividadesNoIncluidas: "",
+  precio: -1,
 };
 
+const newReservacion = {
+  id: null,
+  cantidad: 1,
+  clienteIdentificacion: "",
+  tourID: "",
+};
 module.exports = {
   newTour,
+  newReservacion,
 };

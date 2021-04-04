@@ -6,7 +6,7 @@ export function loadReservacionSuccess(reservaciones) {
   return { type: types.LOAD_RESERVACIONES_SUCCESS, reservaciones };
 }
 
-export function updateReservacionSuccess(reservaciones) {
+export function updateReservacionSuccess(reservacion) {
   return { type: types.UPDATE_RESERVACION_SUCCESS, reservacion };
 }
 

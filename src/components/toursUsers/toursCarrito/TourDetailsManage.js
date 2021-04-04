@@ -4,20 +4,24 @@ import { loadTours } from "../../../redux/actions/tourActions";
 import { loadFotos } from "../../../redux/actions/fotoActions";
 import { loadReviews } from "../../../redux/actions/reviewActions";
 import { loadClientes } from "../../../redux/actions/clienteActions";
+import { saveReservacion } from "../../../redux/actions/reservacionActions";
 import PropTypes from "prop-types";
 import TourDetails from "./TourDetails";
 import "react-datepicker/dist/react-datepicker.css";
-import { newTour } from "../../../../models/tourModel";
+import { newTour, newReservacion } from "../../../../models/tourModel";
+import { toast } from "react-toastify";
 
 function TourCardManage({
   loadTours,
   loadFotos,
   loadReviews,
   loadClientes,
+  saveReservacion,
   ...props
 }) {
-  const [calificacionEstrellas, setCalificacionEstrellas] = useState(0);
-  const [cantidadReviews, setCantidadReviews] = useState(0);
+  const [reservacion, setReservacion] = useState(newReservacion);
+  const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (props.fotos.length === 0) {
@@ -53,12 +57,51 @@ function TourCardManage({
     (review) => review.tourID.toString() === props.match.params.id
   );
 
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setReservacion((prevReservacion) => ({
+      ...prevReservacion,
+      [name]: value,
+    }));
+  }
+
+  function handleSave(event) {
+    debugger;
+    let json = JSON.parse(localStorage.getItem("tokenmovt"));
+    const correo = json["token"];
+    const clienteIdentificacion =
+      props.clientes.find((cliente) => cliente.usuarioCorreo === correo)
+        .identificacion || "";
+
+    event.preventDefault();
+    setSaving(true);
+    setReservacion((prevReservacion) => ({
+      ...prevReservacion,
+      ["tourID"]: props.tour.id,
+      ["clienteIdentificacion"]: clienteIdentificacion,
+    }));
+    saveReservacion(reservacion)
+      .then(() => {
+        toast.success("Reservación guardado.");
+        history.push("/");
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
+  }
+  debugger;
   return (
     <>
       <TourDetails
         fotos={filterFotos}
         reviews={filterReviews}
         tour={props.tour}
+        errors={errors}
+        onChange={handleChange}
+        onSave={handleSave}
+        saving={saving}
+        reservacion={reservacion}
       ></TourDetails>
     </>
   );
@@ -66,6 +109,7 @@ function TourCardManage({
 
 TourCardManage.propTypes = {
   reviews: PropTypes.array.isRequired,
+  reservacion: PropTypes.object,
   tours: PropTypes.array.isRequired,
   fotos: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
@@ -73,10 +117,17 @@ TourCardManage.propTypes = {
   loadFotos: PropTypes.func.isRequired,
   loadReviews: PropTypes.func.isRequired,
   loadClientes: PropTypes.func.isRequired,
+  saveReservacion: PropTypes.func.isRequired,
 };
 
 export function getTourByID(tours, id) {
   return tours.find((tour) => tour.id.toString() === id) || null;
+}
+
+export function getClienteByID(clientes) {
+  let json = JSON.parse(localStorage.getItem("tokenmovt"));
+  const correo = json["token"];
+  return clientes.find((cliente) => cliente.usuarioCorreo === correo) || null;
 }
 
 //what part pf the state is passed to our components via props
@@ -109,17 +160,6 @@ function mapStateToProps(state, ownProps) {
     tours: state.tours,
     tour,
     loading: state.apiCallsInProgress > 0,
-    // tours:
-    //   state.fotos.length === 0
-    //     ? []
-    //     : filtered.map((tour) => {
-    //         return {
-    //           ...tour,
-    //           fotoPath: state.fotos.find(
-    //             (f) => f.tourID === tour.id && f.nombre === "food lunch"
-    //           ).imagen,
-    //         };
-    //       }),
   };
 }
 
@@ -129,8 +169,7 @@ const mapDispatchToProps = {
   loadFotos,
   loadReviews,
   loadClientes,
-  //actions: bindActionCreators(tourActions, dispatch),
+  saveReservacion,
 };
 
-//two functions call
 export default connect(mapStateToProps, mapDispatchToProps)(TourCardManage);
