@@ -19,7 +19,6 @@ export function getTours() {
 
 export function saveTour(tour) {
   const baseUrl = process.env.API_URL + "/api/tour/create";
-  console.log("save tour id: ");
   return fetch(baseUrl, {
     method: "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
