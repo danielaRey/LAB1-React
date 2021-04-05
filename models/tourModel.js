@@ -16,7 +16,14 @@ const newReservacion = {
   clienteIdentificacion: "",
   tourID: "",
 };
+
+const newUsuario = {
+  correo: "",
+  password: "",
+  tipoUsuario: 0,
+};
 module.exports = {
   newTour,
   newReservacion,
+  newUsuario,
 };

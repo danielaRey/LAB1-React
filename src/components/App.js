@@ -23,7 +23,7 @@ function App() {
     >
       <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={ToursPageSearch} />
         <Route path="/about" component={AboutPage} />
         <Route path="/tours/search" component={ToursPageSearch} />
         <Route path="/tours/:pais/:ida/:vuelta" component={TourCardManage} />
