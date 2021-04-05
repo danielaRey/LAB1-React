@@ -22,8 +22,19 @@ const newUsuario = {
   password: "",
   tipoUsuario: 0,
 };
+
+const newCliente = {
+  identificacion: "",
+  usuarioCorreo: "",
+  nombre: "",
+  apellidos: "",
+  pais: "",
+  fechaNacimiento: null,
+};
+
 module.exports = {
   newTour,
   newReservacion,
   newUsuario,
+  newCliente,
 };

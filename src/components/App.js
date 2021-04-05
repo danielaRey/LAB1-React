@@ -11,6 +11,7 @@ import TourDetailsManage from "./toursUsers/toursCarrito/TourDetailsManage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TourCardManage from "./toursUsers/TourCardManage";
+import ManageCrearCuenta from "./login/ManageCrearCuenta";
 import Login from "./login/Login";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/tour/:id" component={ManageTourPage} />
         <Route path="/tour" component={ManageTourPage} />
         <Route path="/login" component={Login} />
+        <Route path="/crear-cuenta" component={ManageCrearCuenta} />
         <Route component={PageNotFound} />
       </Switch>
       <ToastContainer autoClose={3000} hideProgressBar />
