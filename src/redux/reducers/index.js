@@ -5,6 +5,7 @@ import favoritos from "./favoritoReducer";
 import reviews from "./reviewReducer";
 import reservaciones from "./reservacionReducer";
 import clientes from "./clienteReducer";
+import usuarios from "./usuarioReducer";
 import apiCallsInProgress from "./apiStatusReducer";
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   reviews,
   reservaciones,
   clientes,
+  usuarios,
 });
 
 export default rootReducer;
