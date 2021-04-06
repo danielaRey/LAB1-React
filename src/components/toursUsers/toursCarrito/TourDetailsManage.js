@@ -47,7 +47,7 @@ function TourCardManage({
         alert("loading clients failed" + err);
       });
     }
-  }, [props.foto]);
+  }, [props.reservacion]);
 
   const filterFotos = props.fotos.filter(
     (foto) => foto.tourID.toString() === props.match.params.id
@@ -66,6 +66,7 @@ function TourCardManage({
   }
 
   function handleSave(event) {
+    event.preventDefault();
     debugger;
     let json = JSON.parse(localStorage.getItem("tokenmovt"));
     const correo = json["token"];
@@ -73,22 +74,49 @@ function TourCardManage({
       props.clientes.find((cliente) => cliente.usuarioCorreo === correo)
         .identificacion || "";
 
-    event.preventDefault();
+    const STORAGE_NAME = "reservacionTour-" + clienteIdentificacion;
+
+    const reservacionTemp = newReservacion;
+    reservacionTemp["clienteIdentificacion"] = clienteIdentificacion;
+    reservacionTemp["tourID"] = props.tour.id;
+    reservacionTemp["cantidad"] = reservacion.cantidad;
     setSaving(true);
-    setReservacion((prevReservacion) => ({
-      ...prevReservacion,
-      ["tourID"]: props.tour.id,
-      ["clienteIdentificacion"]: clienteIdentificacion,
-    }));
-    saveReservacion(reservacion)
-      .then(() => {
-        toast.success("Reservación guardado.");
-        history.push("/");
-      })
-      .catch((error) => {
-        setSaving(false);
-        setErrors({ onSave: error.message });
-      });
+
+    let reservacionArray = [];
+    let reservacionLocal = localStorage.getItem(STORAGE_NAME);
+    if (reservacionLocal) {
+      let jsonReservacion = JSON.parse(reservacionLocal);
+      //localStorage.removeItem("reservacionTour");
+      debugger;
+      for (var i = 0; i < jsonReservacion.length; i++) {
+        reservacionArray.push(jsonReservacion[i]);
+      }
+      reservacionArray.push(reservacionTemp);
+      localStorage.setItem(STORAGE_NAME, JSON.stringify(reservacionArray));
+    } else {
+      reservacionArray.push(reservacionTemp);
+      localStorage.setItem(STORAGE_NAME, JSON.stringify(reservacionArray));
+    }
+
+    toast.success("Reservación guardado.");
+    setSaving(false);
+
+    // setReservacion((prevReservacion) => ({
+    //   ...prevReservacion,
+    //   ["tourID"]: props.tour.id,
+    //   ["clienteIdentificacion"]: clienteIdentificacion,
+    //   ["test"]: 2,
+    // }));
+
+    // saveReservacion(reservacion)
+    //   .then(() => {
+    //     toast.success("Reservación guardado.");
+    //     history.push("/");
+    //   })
+    //   .catch((error) => {
+    //     setSaving(false);
+    //     setErrors({ onSave: error.message });
+    //   });
   }
   debugger;
   return (
