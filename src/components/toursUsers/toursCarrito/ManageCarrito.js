@@ -49,16 +49,6 @@ function ManageCarrito({
 
     jsonReservacion = JSON.parse(reservacionLocal);
   }
-  //falta ver las sessiones, que mostrar
-  // errors={errors}
-  // onSave={handleSave}
-  // saving={saving}
-  // reservacion={reservacion}
-
-  //tour nombre
-  //cantidad
-  //precio
-  //total
 
   function handleSave() {
     debugger;

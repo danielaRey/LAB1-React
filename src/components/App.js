@@ -46,7 +46,7 @@ function App() {
         />
         <Route
           path="/carrito"
-          component={() => <ManageCarrito token={jsonToken} />}
+          render={(props) => <ManageCarrito {...props} token={jsonToken} />}
         />
         <Route component={PageNotFound} />
       </Switch>
