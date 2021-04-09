@@ -58,6 +58,7 @@ function ManageCarrito({
       saveReservacion(reservacion)
         .then(() => {
           if (flag) {
+            localStorage.removeItem(STORAGE_NAME);
             toast.success("Reservación guardado.");
             history.push("/tours/search");
             flag = false;
