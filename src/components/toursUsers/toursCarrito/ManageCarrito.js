@@ -5,8 +5,16 @@ import PropTypes from "prop-types";
 import { newReservacion } from "../../../../models/tourModel";
 import { toast } from "react-toastify";
 import { loadTours } from "../../../redux/actions/tourActions";
+import { loadClientes } from "../../../redux/actions/clienteActions";
+import TableCarrito from "./TableCarrito";
 
-function ManageCarrito({ saveReservacion, loadTours, history, ...props }) {
+function ManageCarrito({
+  saveReservacion,
+  loadTours,
+  loadClientes,
+  history,
+  ...props
+}) {
   const [reservacion, setReservacion] = useState(newReservacion);
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
@@ -18,12 +26,27 @@ function ManageCarrito({ saveReservacion, loadTours, history, ...props }) {
         alert("loading tours failed" + err);
       });
     }
+
+    if (props.clientes.length === 0) {
+      loadClientes().catch((err) => {
+        alert("loading clientes failed" + err);
+      });
+    }
   }, [props.tours]);
 
-  const STORAGE_NAME = "reservacionTour-222"; //+ clienteIdentificacion;
+  const STORAGE_NAME = "reservacionTour"; //+ clienteIdentificacion;
   let reservacionLocal = localStorage.getItem(STORAGE_NAME);
   let jsonReservacion = null;
+  let clienteIdentificacion = 0;
   if (reservacionLocal) {
+    if (props.token && props.clientes.length > 0) {
+      const correo = props.token["token"];
+      clienteIdentificacion =
+        props.clientes.find((cliente) => cliente.usuarioCorreo === correo)
+          .identificacion || "";
+    }
+    debugger;
+
     jsonReservacion = JSON.parse(reservacionLocal);
   }
   //falta ver las sessiones, que mostrar
@@ -36,25 +59,6 @@ function ManageCarrito({ saveReservacion, loadTours, history, ...props }) {
   //cantidad
   //precio
   //total
-
-  function getTourByID(tours, id) {
-    let s = tours.find((tour) => tour.id.toString() === id) || null;
-    return tours.find((tour) => tour.id.toString() === id.toString()) || null;
-  }
-
-  function calcularTotal() {
-    let total = 0;
-    if (props.tours.length > 0 && jsonReservacion) {
-      jsonReservacion.map((reservacion) => {
-        total =
-          total +
-          reservacion.cantidad *
-            getTourByID(props.tours, reservacion.tourID).precio;
-      });
-      return total;
-    }
-    return 0;
-  }
 
   function handleSave() {
     debugger;
@@ -79,78 +83,35 @@ function ManageCarrito({ saveReservacion, loadTours, history, ...props }) {
   function limpiarCarrito() {
     if (reservacionLocal) {
       localStorage.removeItem(STORAGE_NAME);
+      location.reload();
+      return false;
     }
   }
 
-  let f = false;
   return (
     <>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Tour</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.tours.length > 0 && jsonReservacion ? (
-            jsonReservacion.map((reservacion) => {
-              return (
-                <tr key={getTourByID(props.tours, reservacion.tourID).id}>
-                  <td>{getTourByID(props.tours, reservacion.tourID).nombre}</td>
-                  <td>{reservacion.cantidad}</td>
-                  <td>
-                    {getTourByID(props.tours, reservacion.tourID).precio *
-                      reservacion.cantidad}
-                  </td>
-                </tr>
-              );
-            })
-          ) : (
-            <></>
-          )}
-          <tr>
-            <td>Comisión(5%)</td>
-            <td>&nbsp;</td>
-            <td>{calcularTotal() * 0.05}</td>
-          </tr>
-          <tr>
-            <td>Total</td>
-            <td>&nbsp;</td>
-            <td>{calcularTotal() + calcularTotal() * 0.05}</td>
-          </tr>
-        </tbody>
-        <tfoot></tfoot>
-      </table>
-      <button
-        type="submit"
-        onClick={() => {
-          handleSave();
-        }}
-        className="btn btn-primary"
-      >
-        {saving ? "Guardando..." : "Confirmar Compra"}
-      </button>
-
-      <button
-        type="submit"
-        onClick={() => {
-          limpiarCarrito();
-        }}
-        className="btn btn-primary"
-      >
-        Limpiar carrito
-      </button>
+      {props.tours.length > 0 && jsonReservacion ? (
+        <TableCarrito
+          reservaciones={jsonReservacion}
+          tours={props.tours}
+          saving={saving}
+          handleSave={handleSave}
+          limpiarCarrito={limpiarCarrito}
+        ></TableCarrito>
+      ) : (
+        <p>Carrito Vacio!</p>
+      )}
     </>
   );
 }
 
 ManageCarrito.propTypes = {
   tours: PropTypes.array.isRequired,
+  clientes: PropTypes.array.isRequired,
   reservacion: PropTypes.object,
   saveReservacion: PropTypes.func.isRequired,
   loadTours: PropTypes.func.isRequired,
+  loadClientes: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -158,6 +119,7 @@ ManageCarrito.propTypes = {
 function mapStateToProps(state, ownProps) {
   return {
     tours: state.tours,
+    clientes: state.clientes,
     loading: state.apiCallsInProgress > 0,
   };
 }
@@ -165,6 +127,7 @@ function mapStateToProps(state, ownProps) {
 //what actions we want to expose in our components via props
 const mapDispatchToProps = {
   loadTours,
+  loadClientes,
   saveReservacion,
 };
 

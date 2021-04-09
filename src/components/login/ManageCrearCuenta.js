@@ -75,14 +75,18 @@ function ManageCrearCuenta({
   debugger;
   return (
     <>
-      <CrearCuenta
-        errors={errors}
-        onChange={handleChange}
-        onSave={handleSave}
-        saving={saving}
-        cliente={cliente}
-        usuario={usuario}
-      ></CrearCuenta>
+      {!props.token ? (
+        <CrearCuenta
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          saving={saving}
+          cliente={cliente}
+          usuario={usuario}
+        ></CrearCuenta>
+      ) : (
+        <p>Usuario ya esta logeado</p>
+      )}
     </>
   );
 }

@@ -23,6 +23,7 @@ function TourCardManage({
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
+  debugger;
   useEffect(() => {
     if (props.fotos.length === 0) {
       loadFotos().catch((err) => {
@@ -67,14 +68,13 @@ function TourCardManage({
 
   function handleSave(event) {
     event.preventDefault();
-    debugger;
     let json = JSON.parse(localStorage.getItem("tokenmovt"));
     const correo = json["token"];
     const clienteIdentificacion =
       props.clientes.find((cliente) => cliente.usuarioCorreo === correo)
         .identificacion || "";
 
-    const STORAGE_NAME = "reservacionTour-" + clienteIdentificacion;
+    const STORAGE_NAME = "reservacionTour";
 
     const reservacionTemp = newReservacion;
     reservacionTemp["clienteIdentificacion"] = clienteIdentificacion;
@@ -86,7 +86,6 @@ function TourCardManage({
     let reservacionLocal = localStorage.getItem(STORAGE_NAME);
     if (reservacionLocal) {
       let jsonReservacion = JSON.parse(reservacionLocal);
-      //localStorage.removeItem("reservacionTour");
       debugger;
       for (var i = 0; i < jsonReservacion.length; i++) {
         reservacionArray.push(jsonReservacion[i]);
@@ -98,25 +97,8 @@ function TourCardManage({
       localStorage.setItem(STORAGE_NAME, JSON.stringify(reservacionArray));
     }
 
-    toast.success("Reservación guardado.");
+    toast.success("Reservación guardada en carrito.");
     setSaving(false);
-
-    // setReservacion((prevReservacion) => ({
-    //   ...prevReservacion,
-    //   ["tourID"]: props.tour.id,
-    //   ["clienteIdentificacion"]: clienteIdentificacion,
-    //   ["test"]: 2,
-    // }));
-
-    // saveReservacion(reservacion)
-    //   .then(() => {
-    //     toast.success("Reservación guardado.");
-    //     history.push("/");
-    //   })
-    //   .catch((error) => {
-    //     setSaving(false);
-    //     setErrors({ onSave: error.message });
-    //   });
   }
   debugger;
   return (
