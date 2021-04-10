@@ -32,9 +32,18 @@ const newCliente = {
   fechaNacimiento: null,
 };
 
+const newFoto = {
+  id: null,
+  nombre: "",
+  imagen: "",
+  pathImagen: "",
+  tourID: "",
+};
+
 module.exports = {
   newTour,
   newReservacion,
   newUsuario,
   newCliente,
+  newFoto,
 };

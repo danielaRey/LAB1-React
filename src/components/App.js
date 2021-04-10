@@ -15,6 +15,7 @@ import TourCardManage from "./toursUsers/TourCardManage";
 import ManageCrearCuenta from "./login/ManageCrearCuenta";
 import ManageCarrito from "./toursUsers/toursCarrito/ManageCarrito";
 import Login from "./login/Login";
+import ManageFotos from "./fotos/ManageFotos";
 
 function App() {
   const STORAGE_NAME = "tokenmovt";
@@ -28,6 +29,7 @@ function App() {
       className="container-fluid"
       style={{
         backgroundColor: "#A7C1E8",
+        padding: "10px",
       }}
     >
       <Header token={jsonToken} />
@@ -50,6 +52,7 @@ function App() {
           path="/carrito"
           render={(props) => <ManageCarrito {...props} token={jsonToken} />}
         />
+        <Route path="/fotos/:id" component={ManageFotos} />
         <Route component={PageNotFound} />
       </Switch>
       <ToastContainer autoClose={3000} hideProgressBar />

@@ -35,7 +35,12 @@ const TourListCard = ({ tours, fotos, reviews }) => (
 
               <div className="p-4 flex-1 flex flex-col">
                 <h3 className="mb-4 text-2xl">
-                  <Link to={"/tour/details/" + tour.id}>{tour.nombre}</Link>
+                  <Link
+                    style={{ cursor: "pointer" }}
+                    to={"/tour/details/" + tour.id}
+                  >
+                    {tour.nombre}
+                  </Link>
                 </h3>
                 <div className="mb-4 text-grey-darker text-sm flex-1">
                   <p className="card-text">Duración: {tour.duracion}</p>

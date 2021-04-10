@@ -8,15 +8,18 @@ const TourMainImage = (props) => {
   const fotoTour = props.fotos.find(
     (f) => f.tourID === props.tourID && f.nombre === "principal"
   );
-  let imgTourPath = fotoTour ? fotoTour.pathImagen.substring(44) : "";
+  debugger;
+  let imgTourPath = fotoTour ? fotoTour.pathImagen.substring(12) : "";
 
   const srcImg = "../../../imagenes/" + imgTourPath;
 
-  debugger;
-  return fotoTour ? (
-    <img className="card-img-top" src={srcImg} alt={fotoTour.nombre}></img>
-  ) : (
-    <img className="card-img-top" src={sus} alt={props.tourID}></img>
+  return (
+    <img
+      style={{ float: "right", width: "60%" }}
+      className="card-img-top"
+      src={srcImg}
+      alt={fotoTour.nombre}
+    ></img>
   );
 };
 

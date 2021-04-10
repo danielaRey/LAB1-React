@@ -13,12 +13,11 @@ const TourDetails = (props) => {
     <>
       <Carousel infiniteLoop={true}>
         {props.fotos.map((foto) => {
-          let imgTourPath = foto.pathImagen.substring(44);
+          let imgTourPath = foto.pathImagen.substring(12);
           const srcImg = "../../../imagenes/" + imgTourPath;
           return (
             <div key={foto.id}>
               <img src={srcImg} />
-              <p className="legend">Legend 1</p>
             </div>
           );
         })}

@@ -30,7 +30,7 @@ function TourCardManage({ loadTours, loadFotos, loadReviews, ...props }) {
         alert("loading tours failed" + err);
       });
     }
-  }, [props.foto]);
+  }, [props.tours]);
 
   return (
     <>

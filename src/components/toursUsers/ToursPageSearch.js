@@ -9,6 +9,7 @@ function ToursPageSearch(props) {
   const activeStyle = {
     backgroundColor: "#4A6DA2",
     padding: "30px",
+    margin: "auto",
   };
 
   const [input, setInput] = useState("Costa Rica");
@@ -59,7 +60,7 @@ function ToursPageSearch(props) {
           </div>
 
           <div
-            style={{ backgroundColor: "#4A6DA2" }}
+            style={{ backgroundColor: "#4A6DA2", margin: "auto" }}
             className="row align-items-start pb-3"
           >
             <button

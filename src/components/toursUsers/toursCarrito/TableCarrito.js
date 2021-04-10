@@ -1,6 +1,7 @@
 import React from "react";
 
 const TableCarrito = (props) => {
+  debugger;
   function getTourByID(tours, id) {
     let s = tours.find((tour) => tour.id.toString() === id) || null;
     return tours.find((tour) => tour.id.toString() === id.toString()) || null;

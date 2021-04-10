@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const TourList = ({ tours }) => (
-  <table className="table">
-    <thead>
+  <table className="table table-striped table-bordered">
+    <thead className="table-success">
       <tr>
         <th>Nombre</th>
         <th>Categoría</th>
-        <th>Fecha</th>
+        <th>Fecha Ida</th>
+        <th>País</th>
+        <th>Subir Fotos </th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +22,12 @@ const TourList = ({ tours }) => (
             </td>
             <td>{tour.categoria}</td>
             <td>{tour.fechaIda}</td>
+            <td>{tour.pais}</td>
+            <td>
+              <Link className="btn btn-success" to={"/fotos/" + tour.id}>
+                Subir Foto
+              </Link>
+            </td>
           </tr>
         );
       })}
