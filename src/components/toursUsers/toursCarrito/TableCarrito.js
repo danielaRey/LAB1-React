@@ -22,8 +22,8 @@ const TableCarrito = (props) => {
 
   return (
     <>
-      <table className="table">
-        <thead>
+      <table className="table table-striped table-borderless">
+        <thead className="table-primary">
           <tr>
             <th>Tour</th>
             <th>Cantidad</th>
@@ -56,21 +56,23 @@ const TableCarrito = (props) => {
         </tbody>
         <tfoot></tfoot>
       </table>
-      <button
-        type="submit"
-        onClick={props.handleSave}
-        className="btn btn-primary"
-      >
-        {props.saving ? "Guardando..." : "Confirmar Compra"}
-      </button>
+      <div className="p-3">
+        <button
+          type="submit"
+          onClick={props.handleSave}
+          className="btn btn-primary mr-2"
+        >
+          {props.saving ? "Guardando..." : "Confirmar Compra"}
+        </button>
 
-      <button
-        type="submit"
-        onClick={props.limpiarCarrito}
-        className="btn btn-primary"
-      >
-        Limpiar carrito
-      </button>
+        <button
+          type="submit"
+          onClick={props.limpiarCarrito}
+          className="btn btn-primary"
+        >
+          Limpiar carrito
+        </button>
+      </div>
     </>
   );
 };

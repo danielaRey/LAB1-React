@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { loadTours } from "../../../redux/actions/tourActions";
 import { loadClientes } from "../../../redux/actions/clienteActions";
 import TableCarrito from "./TableCarrito";
+import { Redirect } from "react-router-dom";
 
 function ManageCarrito({
   saveReservacion,
@@ -81,16 +82,22 @@ function ManageCarrito({
 
   return (
     <>
-      {props.tours.length > 0 && jsonReservacion ? (
-        <TableCarrito
-          reservaciones={jsonReservacion}
-          tours={props.tours}
-          saving={saving}
-          handleSave={handleSave}
-          limpiarCarrito={limpiarCarrito}
-        ></TableCarrito>
+      {!props.token ? (
+        <Redirect to="/" />
       ) : (
-        <p>Carrito Vacio!</p>
+        <>
+          {props.tours.length > 0 && jsonReservacion ? (
+            <TableCarrito
+              reservaciones={jsonReservacion}
+              tours={props.tours}
+              saving={saving}
+              handleSave={handleSave}
+              limpiarCarrito={limpiarCarrito}
+            ></TableCarrito>
+          ) : (
+            <p>Carrito Vacio!</p>
+          )}
+        </>
       )}
     </>
   );

@@ -20,20 +20,23 @@ const Header = (props) => {
         Home
       </NavLink>
       {" | "}
-      <NavLink to="/carrito" activeStyle={activeStyle}>
-        Carrito
-      </NavLink>
-      {" | "}
+
       {props.token ? (
-        <NavLink
-          to="/"
-          activeStyle={activeStyle}
-          onClick={() => {
-            logout();
-          }}
-        >
-          Logout
-        </NavLink>
+        <>
+          <NavLink to="/carrito" activeStyle={activeStyle}>
+            Carrito
+          </NavLink>
+          <NavLink
+            style={{ float: "right" }}
+            to="/"
+            activeStyle={activeStyle}
+            onClick={() => {
+              logout();
+            }}
+          >
+            Logout
+          </NavLink>
+        </>
       ) : (
         <>
           <NavLink to="/login" activeStyle={activeStyle}>
