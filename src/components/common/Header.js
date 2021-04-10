@@ -48,10 +48,17 @@ const Header = (props) => {
           </NavLink>
         </>
       )}
-      {" | "}
-      <NavLink to="/tours" activeStyle={activeStyle}>
-        Tours
-      </NavLink>
+
+      {props.token && props.token["tipoUsuario"] === 1 ? (
+        <>
+          {" | "}
+          <NavLink to="/tours" activeStyle={activeStyle}>
+            Tours
+          </NavLink>
+        </>
+      ) : (
+        <></>
+      )}
     </nav>
   );
 };

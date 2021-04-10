@@ -38,11 +38,25 @@ function App() {
         <Route path="/about" component={AboutPage} />
         <Route path="/tours/search" component={ToursPageSearch} />
         <Route path="/tours/:pais/:ida/:vuelta" component={TourCardManage} />
-        <Route exact path="/tours" component={ToursPage} />
+
+        <Route
+          exact
+          path="/tours"
+          render={(props) => <ToursPage {...props} token={jsonToken} />}
+        />
+
         <Route path="/tours" component={SearchNotFound} />
         <Route path="/tour/details/:id" component={TourDetailsManage} />
-        <Route path="/tour/:id" component={ManageTourPage} />
-        <Route path="/tour" component={ManageTourPage} />
+
+        <Route
+          path="/tour/:id"
+          render={(props) => <ManageTourPage {...props} token={jsonToken} />}
+        />
+        <Route
+          path="/tour"
+          render={(props) => <ManageTourPage {...props} token={jsonToken} />}
+        />
+
         <Route path="/login" component={() => <Login token={jsonToken} />} />
         <Route
           path="/crear-cuenta"
@@ -52,7 +66,12 @@ function App() {
           path="/carrito"
           render={(props) => <ManageCarrito {...props} token={jsonToken} />}
         />
-        <Route path="/fotos/:id" component={ManageFotos} />
+
+        <Route
+          path="/fotos/:id"
+          render={(props) => <ManageFotos {...props} token={jsonToken} />}
+        />
+
         <Route component={PageNotFound} />
       </Switch>
       <ToastContainer autoClose={3000} hideProgressBar />

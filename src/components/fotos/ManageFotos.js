@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import { newFoto } from "../../../models/tourModel";
 import { toast } from "react-toastify";
 import FotoForm from "./FotoForm";
+import { Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function ManageTourPage({ saveFoto, history, ...props }) {
   const [foto, setFoto] = useState(newFoto);
@@ -49,13 +51,25 @@ function ManageTourPage({ saveFoto, history, ...props }) {
   }
 
   return (
-    <FotoForm
-      foto={foto}
-      errors={errors}
-      onChange={handleChange}
-      onSave={handleSave}
-      saving={saving}
-    />
+    <>
+      {" "}
+      {props.token && props.token["tipoUsuario"] === 1 ? (
+        <>
+          <NavLink to="/tours" className="btn btn-primary">
+            Regresar
+          </NavLink>
+          <FotoForm
+            foto={foto}
+            errors={errors}
+            onChange={handleChange}
+            onSave={handleSave}
+            saving={saving}
+          />
+        </>
+      ) : (
+        <Redirect to="/" />
+      )}
+    </>
   );
 }
 

@@ -21,22 +21,28 @@ class ToursPage extends React.Component {
   render() {
     return (
       <>
-        {this.state.redirectToAddTourPage && <Redirect to="/tour" />}
-        <h2>Tours</h2>
-        {this.props.loading ? (
-          <Spinner />
-        ) : (
+        {this.props.token && this.props.token["tipoUsuario"] === 1 ? (
           <>
-            <button
-              style={{ marginBottom: 20 }}
-              className="btn btn-primary add-tour"
-              onClick={() => this.setState({ redirectToAddTourPage: true })}
-            >
-              Agregar Tour
-            </button>
+            {this.state.redirectToAddTourPage && <Redirect to="/tour" />}
+            <h2>Tours</h2>
+            {this.props.loading ? (
+              <Spinner />
+            ) : (
+              <>
+                <button
+                  style={{ marginBottom: 20 }}
+                  className="btn btn-primary add-tour"
+                  onClick={() => this.setState({ redirectToAddTourPage: true })}
+                >
+                  Agregar Tour
+                </button>
 
-            <TourList tours={this.props.tours}></TourList>
+                <TourList tours={this.props.tours}></TourList>
+              </>
+            )}
           </>
+        ) : (
+          <Redirect to="/" />
         )}
       </>
     );
