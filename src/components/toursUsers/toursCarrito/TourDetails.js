@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import { NavLink } from "react-router-dom";
 import TextInput from "../../common/TextInput";
+import ReactStars from "react-rating-stars-component";
 
 const TourDetails = (props) => {
   const tokenExists = localStorage.getItem("tokenmovt");
@@ -102,7 +103,13 @@ const TourDetails = (props) => {
               marginBottom: "2px",
             }}
           >
-            <p>{review.calificacion}</p>
+            <ReactStars
+              count={5}
+              size={24}
+              value={review.calificacion}
+              edit={false}
+              activeColor="#ffd700"
+            />
             <p>
               {review.clienteNombre} - {review.comentario}
             </p>

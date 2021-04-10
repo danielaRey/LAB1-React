@@ -1,4 +1,5 @@
 import React from "react";
+import ReactStars from "react-rating-stars-component";
 
 const TourCalificaciones = (props) => {
   function amountReviewsTourID() {
@@ -25,8 +26,19 @@ const TourCalificaciones = (props) => {
 
   return (
     <>
-      <p>Calificación: {cantidadEstrellasTourID()}</p>
       <p>Cantidad de Reviews: {amountReviewsTourID()}</p>
+      <p>
+        {" "}
+        <ReactStars
+          count={5}
+          size={24}
+          value={cantidadEstrellasTourID()}
+          edit={false}
+          activeColor="#ffd700"
+        />
+        {"calificación: "}
+        {cantidadEstrellasTourID()}
+      </p>
     </>
   );
 };
