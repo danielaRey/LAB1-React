@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ReactCountryDropdown } from "react-country-dropdown";
+import "react-country-dropdown/dist/index.css";
 
 function ToursPageSearch(props) {
-  const [input, setInput] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const activeStyle = {
+    backgroundColor: "#4A6DA2",
+    padding: "30px",
+  };
+
+  const [input, setInput] = useState("Costa Rica");
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [flagRedirect, setFlagRedirect] = useState(false);
 
   const updateInput = async (input) => {
@@ -17,7 +24,9 @@ function ToursPageSearch(props) {
     setFlagRedirect(true);
   }
 
-  console.log(startDate);
+  const handleSelect = (country) => {
+    setInput(country["name"]);
+  };
 
   return (
     <>
@@ -28,31 +37,41 @@ function ToursPageSearch(props) {
       ) : (
         <>
           <h2>Tours Búsqueda</h2>
-          <input
-            placeholder={"nombre"}
-            onChange={(e) => updateInput(e.target.value)}
-          />
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            minDate={new Date()}
-            isClearable
-            placeholderText="Ida"
-          />
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            minDate={new Date()}
-            isClearable
-            placeholderText="Vuelta"
-          />
-          <button
-            style={{ marginBottom: 20 }}
-            onClick={search}
-            className="btn btn-primary add-tour"
+          <div style={activeStyle} className="row align-items-start">
+            <ReactCountryDropdown onSelect={handleSelect} countryCode="CR" />
+
+            <DatePicker
+              className="col mr-2"
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              minDate={new Date()}
+              isClearable
+              placeholderText="Ida"
+            />
+            <DatePicker
+              className="col mr-2"
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              minDate={new Date()}
+              isClearable
+              placeholderText="Vuelta"
+            />
+          </div>
+
+          <div
+            style={{ backgroundColor: "#4A6DA2" }}
+            className="row align-items-start pb-3"
           >
-            Buscar Tour
-          </button>
+            <button
+              style={{ margin: "auto" }}
+              onClick={() => {
+                search();
+              }}
+              className="btn btn-primary add-tour col-md-3 ms-md-auto"
+            >
+              Buscar Tour
+            </button>
+          </div>
         </>
       )}
     </>

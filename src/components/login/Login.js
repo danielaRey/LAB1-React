@@ -48,13 +48,13 @@ export default function Login(props) {
         <Redirect to="/" />
       ) : (
         <div className="login-wrapper">
-          <h1>Please Log In</h1>
+          <h1>Iniciar sesión</h1>
           <form onSubmit={handleSubmit}>
-            <label>
-              <p>Username</p>
+            <label style={{ margin: "8px" }}>
+              <p>Correo</p>
               <input type="text" onChange={(e) => setCorreo(e.target.value)} />
             </label>
-            <label>
+            <label style={{ margin: "8px" }}>
               <p>Password</p>
               <input
                 type="password"
@@ -62,7 +62,12 @@ export default function Login(props) {
               />
             </label>
             <div>
-              <button type="submit" onClick={refreshPage}>
+              <button
+                style={{ marginLeft: "8px" }}
+                className="btn btn-primary "
+                type="submit"
+                onClick={refreshPage}
+              >
                 Submit
               </button>
             </div>

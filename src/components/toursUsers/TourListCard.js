@@ -38,8 +38,8 @@ const TourListCard = ({ tours, fotos, reviews }) => (
                   <Link to={"/tour/details/" + tour.id}>{tour.nombre}</Link>
                 </h3>
                 <div className="mb-4 text-grey-darker text-sm flex-1">
-                  <p className="card-text">{tour.duracion}</p>
-                  <p className="card-text">{tour.precio}</p>
+                  <p className="card-text">Duración: {tour.duracion}</p>
+                  <p className="card-text">Precio: {tour.precio}</p>
                   <TourCalificaciones reviews={reviews} tourID={tour.id} />
                 </div>
                 <a

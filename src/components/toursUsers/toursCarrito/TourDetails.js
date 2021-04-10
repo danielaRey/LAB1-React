@@ -9,14 +9,12 @@ import TextInput from "../../common/TextInput";
 
 const TourDetails = (props) => {
   const tokenExists = localStorage.getItem("tokenmovt");
-  debugger;
   return (
     <>
       <Carousel infiniteLoop={true}>
         {props.fotos.map((foto) => {
           let imgTourPath = foto.pathImagen.substring(44);
           const srcImg = "../../../imagenes/" + imgTourPath;
-          debugger;
           return (
             <div key={foto.id}>
               <img src={srcImg} />
@@ -25,44 +23,90 @@ const TourDetails = (props) => {
           );
         })}
       </Carousel>
-      <p>{props.tour.descripcion}</p>
-      <p>{props.tour.horaInicio}</p>
-      <p>{props.tour.indicacionesGenerales}</p>
-      <p>{props.tour.actividadesIncluidas}</p>
-      <p>{props.tour.actividadesNoIncluidas}</p>
-      {tokenExists ? (
-        <div>
-          <p>HOLA TOKEN EXISTS</p>
-          <p>precio: {props.tour.precio}</p>
-          <form onSubmit={props.onSave}>
-            <TextInput
-              name="cantidad"
-              typeInput="number"
-              label="Cantidad"
-              value={props.reservacion.cantidad}
-              onChange={props.onChange}
-              error={props.errors.cantidad}
-            />
-            <button
-              type="submit"
-              disabled={props.saving}
-              className="btn btn-primary"
-            >
-              {props.saving ? "Guardando..." : "Reserva ya!"}
-            </button>
-          </form>
-          <p>reservacion: {props.reservacion.cantidad}</p>
-          <NavLink to="/tours/carrito/">Reserva ya!</NavLink>
+      <hr
+        style={{
+          height: "1px",
+          borderWidth: "0",
+          backgroundColor: "gray",
+        }}
+      ></hr>
+      <div className="row">
+        <div className="col-9">
+          <p>{props.tour.descripcion}</p>
+          <p>Hora de inicio: {props.tour.horaInicio}</p>
+          <p>Indicaciones a seguir: {props.tour.indicacionesGenerales}</p>
+          <h5>Actividades</h5>
+          <table
+            className="table table-success table-stripe"
+            style={{ width: "auto" }}
+          >
+            <thead>
+              <tr>
+                <th>Actividades Incluidas</th>
+                <th>Actividades NO Incluidas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{props.tour.actividadesIncluidas}</td>
+                <td>{props.tour.actividadesNoIncluidas}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      ) : (
-        <p>ADIOS TOKEN NO EXISTE</p>
-      )}
+        <div className="col">
+          <p>
+            {" "}
+            Desde <br />$ {props.tour.precio}
+            <br /> por persona
+          </p>
+          {tokenExists ? (
+            <div>
+              <form onSubmit={props.onSave}>
+                <TextInput
+                  name="cantidad"
+                  typeInput="number"
+                  label="Cantidad"
+                  value={props.reservacion.cantidad}
+                  onChange={props.onChange}
+                  error={props.errors.cantidad}
+                />
+                <button
+                  type="submit"
+                  disabled={props.saving}
+                  className="btn btn-primary"
+                >
+                  {props.saving ? "Guardando..." : "Reserva ya!"}
+                </button>
+              </form>
+            </div>
+          ) : (
+            <> </>
+          )}
+        </div>
+      </div>
+      <hr
+        style={{
+          height: "1px",
+          borderWidth: "0",
+          backgroundColor: "gray",
+        }}
+      ></hr>
+      <h4>Reviews</h4>
       {props.reviews.map((review) => {
         return (
-          <div key={review.id}>
+          <div
+            key={review.id}
+            style={{
+              border: "1px ridge gray",
+              padding: "5px",
+              marginBottom: "2px",
+            }}
+          >
             <p>{review.calificacion}</p>
-            <p>{review.clienteNombre}</p>
-            <p>{review.comentario}</p>
+            <p>
+              {review.clienteNombre} - {review.comentario}
+            </p>
           </div>
         );
       })}

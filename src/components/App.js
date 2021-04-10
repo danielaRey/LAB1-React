@@ -4,6 +4,7 @@ import HomePage from "./home/HomePage";
 import AboutPage from "./about/AboutPage";
 import Header from "./common/Header";
 import PageNotFound from "./PageNotFound";
+import SearchNotFound from "./SearchNotFound";
 import ToursPage from "./tours/ToursPage";
 import ToursPageSearch from "./toursUsers/ToursPageSearch";
 import ManageTourPage from "./tours/ManageTourPage";
@@ -26,7 +27,7 @@ function App() {
     <div
       className="container-fluid"
       style={{
-        backgroundColor: "wheat",
+        backgroundColor: "#A7C1E8",
       }}
     >
       <Header token={jsonToken} />
@@ -35,7 +36,8 @@ function App() {
         <Route path="/about" component={AboutPage} />
         <Route path="/tours/search" component={ToursPageSearch} />
         <Route path="/tours/:pais/:ida/:vuelta" component={TourCardManage} />
-        <Route path="/tours" component={ToursPage} />
+        <Route exact path="/tours" component={ToursPage} />
+        <Route path="/tours" component={SearchNotFound} />
         <Route path="/tour/details/:id" component={TourDetailsManage} />
         <Route path="/tour/:id" component={ManageTourPage} />
         <Route path="/tour" component={ManageTourPage} />
