@@ -23,6 +23,7 @@ function TourCardManage({
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
+  debugger;
   useEffect(() => {
     if (props.fotos.length === 0) {
       loadFotos().catch((err) => {
@@ -47,7 +48,7 @@ function TourCardManage({
         alert("loading clients failed" + err);
       });
     }
-  }, [props.foto]);
+  }, [props.reservacion]);
 
   const filterFotos = props.fotos.filter(
     (foto) => foto.tourID.toString() === props.match.params.id
@@ -66,29 +67,38 @@ function TourCardManage({
   }
 
   function handleSave(event) {
-    debugger;
+    event.preventDefault();
     let json = JSON.parse(localStorage.getItem("tokenmovt"));
     const correo = json["token"];
     const clienteIdentificacion =
       props.clientes.find((cliente) => cliente.usuarioCorreo === correo)
         .identificacion || "";
 
-    event.preventDefault();
+    const STORAGE_NAME = "reservacionTour" + clienteIdentificacion;
+    debugger;
+    const reservacionTemp = newReservacion;
+    reservacionTemp["clienteIdentificacion"] = clienteIdentificacion;
+    reservacionTemp["tourID"] = props.tour.id;
+    reservacionTemp["cantidad"] = reservacion.cantidad;
     setSaving(true);
-    setReservacion((prevReservacion) => ({
-      ...prevReservacion,
-      ["tourID"]: props.tour.id,
-      ["clienteIdentificacion"]: clienteIdentificacion,
-    }));
-    saveReservacion(reservacion)
-      .then(() => {
-        toast.success("Reservación guardado.");
-        history.push("/");
-      })
-      .catch((error) => {
-        setSaving(false);
-        setErrors({ onSave: error.message });
-      });
+
+    let reservacionArray = [];
+    let reservacionLocal = localStorage.getItem(STORAGE_NAME);
+    if (reservacionLocal) {
+      let jsonReservacion = JSON.parse(reservacionLocal);
+      debugger;
+      for (var i = 0; i < jsonReservacion.length; i++) {
+        reservacionArray.push(jsonReservacion[i]);
+      }
+      reservacionArray.push(reservacionTemp);
+      localStorage.setItem(STORAGE_NAME, JSON.stringify(reservacionArray));
+    } else {
+      reservacionArray.push(reservacionTemp);
+      localStorage.setItem(STORAGE_NAME, JSON.stringify(reservacionArray));
+    }
+
+    toast.success("Reservación guardada en carrito.");
+    setSaving(false);
   }
   debugger;
   return (

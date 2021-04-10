@@ -40,17 +40,54 @@ function ManageCrearCuenta({
   }
 
   function formIsValid() {
-    // const { nombre, categoria } = tour;
-    // const errors = {};
-    // if (!nombre) errors.nombre = "Nombre es requerido";
-    // if (!categoria) errors.categoria = "Categoría es requerida.";
-    // setErrors(errors);
-    // // Form is valid if the errors object still has no properties
-    // return Object.keys(errors).length === 0;
+    const {
+      identificacion,
+      nombre,
+      apellidos,
+      pais,
+      correo,
+      password,
+    } = cliente;
+    const errors = {};
+    let passworErrors = "";
+    debugger;
+    if (!identificacion) errors.identificacion = "Identificación es requerida";
+    if (!nombre) errors.nombre = "Nombre es requerido.";
+    if (!apellidos) errors.apellidos = "Apellido es requerido";
+    if (!correo) errors.correo = "Correo es requerido.";
+    if (!password) {
+      passworErrors = "Contraseña es requerida.";
+    } else {
+      if (password.length < 8) {
+        passworErrors =
+          passworErrors + "Contraseña debe ser de mínimo 8 dígitos.";
+      }
+      if (!/\d/.test(password)) {
+        passworErrors =
+          passworErrors + "Contraseña debe contar al menos un número.";
+      }
+      if (!/(?=.*[A-Z])(?=.*[a-z])/.test(password)) {
+        passworErrors =
+          passworErrors +
+          "Contraseña debe tener una letra mayúscula y minúscula.";
+      }
+      if (!/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])/.test(password)) {
+        passworErrors =
+          passworErrors + "Contraseña debe tener un carácter especial.";
+      }
+    }
+    ///^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/
+
+    errors.password = passworErrors;
+
+    setErrors(errors);
+    // Form is valid if the errors object still has no properties
+    return Object.keys(errors).length === 0;
   }
 
   function handleSave(event) {
     event.preventDefault();
+    if (!formIsValid()) return;
     const usuarioCorreo = usuario.correo;
     //if (!formIsValid()) return;
     setSaving(true);
@@ -75,14 +112,18 @@ function ManageCrearCuenta({
   debugger;
   return (
     <>
-      <CrearCuenta
-        errors={errors}
-        onChange={handleChange}
-        onSave={handleSave}
-        saving={saving}
-        cliente={cliente}
-        usuario={usuario}
-      ></CrearCuenta>
+      {!props.token ? (
+        <CrearCuenta
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          saving={saving}
+          cliente={cliente}
+          usuario={usuario}
+        ></CrearCuenta>
+      ) : (
+        <p>Usuario ya esta logeado</p>
+      )}
     </>
   );
 }

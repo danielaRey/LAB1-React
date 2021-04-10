@@ -17,9 +17,7 @@ const TourCalificaciones = (props) => {
     );
     for (i = 0; i < filterReviews.length; i++) {
       calificacion = calificacion + parseInt(filterReviews[i].calificacion);
-      debugger;
     }
-    debugger;
     return (
       calificacion / (amountReviewsTourID() == 0 ? 1 : amountReviewsTourID())
     );

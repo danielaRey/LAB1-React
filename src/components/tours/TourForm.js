@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextInput from "../common/TextInput";
+import { CountryDropdown } from "react-country-region-selector";
 
 const TourForm = ({ tour, onSave, onChange, saving = false, errors = {} }) => {
   return (
@@ -84,6 +85,32 @@ const TourForm = ({ tour, onSave, onChange, saving = false, errors = {} }) => {
         error={errors.actividadesNoIncluidas}
       />
 
+      <TextInput
+        name="fechaIda"
+        label="Fecha de Ida"
+        typeInput="date"
+        value={tour.fechaIda}
+        onChange={onChange}
+        error={errors.fechaIda}
+      />
+
+      <TextInput
+        name="fechaVuelta"
+        typeInput="date"
+        label="Fecha de vuelta"
+        value={tour.fechaVuelta}
+        onChange={onChange}
+        error={errors.fechaVuelta}
+      />
+
+      <TextInput
+        name="horaInicio"
+        typeInput="time"
+        label="Hora de Inicio"
+        value={tour.horaInicio}
+        onChange={onChange}
+        error={errors.horaInicio}
+      />
       <button type="submit" disabled={saving} className="btn btn-primary">
         {saving ? "Guardando..." : "Guardar"}
       </button>
