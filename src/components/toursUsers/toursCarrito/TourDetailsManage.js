@@ -74,8 +74,8 @@ function TourCardManage({
       props.clientes.find((cliente) => cliente.usuarioCorreo === correo)
         .identificacion || "";
 
-    const STORAGE_NAME = "reservacionTour";
-
+    const STORAGE_NAME = "reservacionTour" + clienteIdentificacion;
+    debugger;
     const reservacionTemp = newReservacion;
     reservacionTemp["clienteIdentificacion"] = clienteIdentificacion;
     reservacionTemp["tourID"] = props.tour.id;

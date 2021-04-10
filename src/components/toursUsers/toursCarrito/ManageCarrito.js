@@ -35,19 +35,19 @@ function ManageCarrito({
     }
   }, [props.tours]);
 
-  const STORAGE_NAME = "reservacionTour"; //+ clienteIdentificacion;
+  let clienteIdentificacion = 0;
+  if (props.token && props.clientes.length > 0) {
+    const correo = props.token["token"];
+    clienteIdentificacion =
+      props.clientes.find((cliente) => cliente.usuarioCorreo === correo)
+        .identificacion || "";
+  }
+
+  const STORAGE_NAME = "reservacionTour" + clienteIdentificacion;
+  debugger;
   let reservacionLocal = localStorage.getItem(STORAGE_NAME);
   let jsonReservacion = null;
-  let clienteIdentificacion = 0;
   if (reservacionLocal) {
-    if (props.token && props.clientes.length > 0) {
-      const correo = props.token["token"];
-      clienteIdentificacion =
-        props.clientes.find((cliente) => cliente.usuarioCorreo === correo)
-          .identificacion || "";
-    }
-    debugger;
-
     jsonReservacion = JSON.parse(reservacionLocal);
   }
 
