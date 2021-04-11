@@ -25,7 +25,6 @@ const activeStyle = {
 
 const TourListCard = ({ tours, fotos, reviews, cliente, favoritos }) => {
   function filterFavoritos(tourID) {
-    debugger;
     const filterFav = favoritos.filter(
       (f) => f.clienteIdentificacion == cliente.identificacion
     );
