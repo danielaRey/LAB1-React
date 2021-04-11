@@ -14,7 +14,8 @@ const TourDetails = (props) => {
     <>
       <Carousel infiniteLoop={true}>
         {props.fotos.map((foto) => {
-          let imgTourPath = foto.pathImagen.substring(12);
+          let fileNameIndex = foto.pathImagen.lastIndexOf("\\") + 1;
+          let imgTourPath = foto.pathImagen.substring(fileNameIndex);
           const srcImg = "../../../imagenes/" + imgTourPath;
           return (
             <div key={foto.id}>

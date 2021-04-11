@@ -11,7 +11,11 @@ const TourMainImage = (props) => {
   const fotoTour = props.fotos.find(
     (f) => f.tourID === props.tourID && f.nombre === "principal"
   );
-  let imgTourPath = fotoTour ? fotoTour.pathImagen.substring(12) : "";
+
+  let fileNameIndex = fotoTour ? fotoTour.pathImagen.lastIndexOf("\\") + 1 : 0;
+  let imgTourPath = fotoTour
+    ? fotoTour.pathImagen.substring(fileNameIndex)
+    : "";
 
   const srcImg = "../../../imagenes/" + imgTourPath;
 
