@@ -40,10 +40,18 @@ const newFoto = {
   tourID: "",
 };
 
+const newFavorito = {
+  id: null,
+  esFavorito: 0,
+  clienteIdentificacion: "",
+  tourID: "",
+};
+
 module.exports = {
   newTour,
   newReservacion,
   newUsuario,
   newCliente,
   newFoto,
+  newFavorito,
 };

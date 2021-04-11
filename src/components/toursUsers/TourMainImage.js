@@ -1,5 +1,5 @@
 import React from "react";
-import sus from "../../../imagenes/sushi.png";
+import Heart from "react-animated-heart";
 
 const TourMainImage = (props) => {
   console.log("props: " + props);
@@ -8,18 +8,24 @@ const TourMainImage = (props) => {
   const fotoTour = props.fotos.find(
     (f) => f.tourID === props.tourID && f.nombre === "principal"
   );
-  debugger;
   let imgTourPath = fotoTour ? fotoTour.pathImagen.substring(12) : "";
 
   const srcImg = "../../../imagenes/" + imgTourPath;
 
   return (
-    <img
-      style={{ float: "right", width: "60%" }}
-      className="card-img-top"
-      src={srcImg}
-      alt={fotoTour.nombre}
-    ></img>
+    <div>
+      <Heart
+        style={{ position: "absolute" }}
+        isClick={props.esFavorito}
+        onClick={() => console.log("")}
+      />
+      <img
+        style={{ float: "right", width: "60%" }}
+        className="card-img-top"
+        src={srcImg}
+        alt={fotoTour.nombre}
+      ></img>
+    </div>
   );
 };
 
