@@ -8,4 +8,5 @@ export default {
   clientes: [],
   usuarios: [],
   apiCallsInProgress: 0,
+  cliente: {},
 };

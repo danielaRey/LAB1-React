@@ -6,6 +6,12 @@ export function getClientes() {
   return fetch(baseUrl).then(handleResponse).catch(handleError);
 }
 
+export function getCliente(correo) {
+  const baseUrl = process.env.API_URL + "/api/cliente/find/correo/" + correo;
+  console.log(baseUrl);
+  return fetch(baseUrl).then(handleResponse).catch(handleError);
+}
+
 export function saveCliente(cliente) {
   const baseUrl = process.env.API_URL + "/api/cliente/create";
   return fetch(baseUrl, {

@@ -3,7 +3,7 @@ import * as favoritoApi from "../../api/favoritoApi";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
 
 export function loadFavoritoSuccess(favoritos) {
-  return { type: types.LOAD_FAVORITOS_SUCCESS, favoritos };
+  return { type: types.LOAD_FAVORITO_SUCCESS, favoritos };
 }
 
 export function updateFavoritoSuccess(favorito) {

@@ -10,6 +10,7 @@ import TourDetails from "./TourDetails";
 import "react-datepicker/dist/react-datepicker.css";
 import { newTour, newReservacion } from "../../../../models/tourModel";
 import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
 
 function TourCardManage({
   loadTours,
@@ -23,7 +24,6 @@ function TourCardManage({
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
-  debugger;
   useEffect(() => {
     if (props.fotos.length === 0) {
       loadFotos().catch((err) => {
@@ -75,7 +75,6 @@ function TourCardManage({
         .identificacion || "";
 
     const STORAGE_NAME = "reservacionTour" + clienteIdentificacion;
-    debugger;
     const reservacionTemp = newReservacion;
     reservacionTemp["clienteIdentificacion"] = clienteIdentificacion;
     reservacionTemp["tourID"] = props.tour.id;
@@ -86,7 +85,6 @@ function TourCardManage({
     let reservacionLocal = localStorage.getItem(STORAGE_NAME);
     if (reservacionLocal) {
       let jsonReservacion = JSON.parse(reservacionLocal);
-      debugger;
       for (var i = 0; i < jsonReservacion.length; i++) {
         reservacionArray.push(jsonReservacion[i]);
       }
@@ -100,7 +98,6 @@ function TourCardManage({
     toast.success("Reservación guardada en carrito.");
     setSaving(false);
   }
-  debugger;
   return (
     <>
       <TourDetails
@@ -147,7 +144,6 @@ function mapStateToProps(state, ownProps) {
     tourID && state.tours.length > 0
       ? getTourByID(state.tours, tourID)
       : newTour;
-  debugger;
   return {
     reviews:
       state.clientes.length === 0

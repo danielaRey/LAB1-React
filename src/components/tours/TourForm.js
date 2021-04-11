@@ -6,7 +6,7 @@ import { CountryDropdown } from "react-country-region-selector";
 const TourForm = ({ tour, onSave, onChange, saving = false, errors = {} }) => {
   return (
     <form onSubmit={onSave}>
-      <h2>{tour.id ? "Editar" : "Agregar"} Tour</h2>
+      <h2>{tour.id ? "Detalles Tour" : "Agregar"} Tour</h2>
       {errors.onSave && (
         <div className="alert alert-danger" role="alert">
           {errors.onSave}
@@ -111,9 +111,13 @@ const TourForm = ({ tour, onSave, onChange, saving = false, errors = {} }) => {
         onChange={onChange}
         error={errors.horaInicio}
       />
-      <button type="submit" disabled={saving} className="btn btn-primary">
-        {saving ? "Guardando..." : "Guardar"}
-      </button>
+      {tour.id ? (
+        <></>
+      ) : (
+        <button type="submit" disabled={saving} className="btn btn-primary">
+          {saving ? "Guardando..." : "Guardar"}
+        </button>
+      )}
     </form>
   );
 };

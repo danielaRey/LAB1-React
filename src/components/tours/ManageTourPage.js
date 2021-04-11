@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import TourForm from "./TourForm";
 import { newTour } from "../../../models/tourModel";
 import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 function ManageTourPage({ tours, loadTours, saveTour, history, ...props }) {
   const [tour, setTour] = useState({ ...props.tour });
@@ -57,14 +59,26 @@ function ManageTourPage({ tours, loadTours, saveTour, history, ...props }) {
       });
   }
 
+  debugger;
   return (
-    <TourForm
-      tour={tour}
-      errors={errors}
-      onChange={handleChange}
-      onSave={handleSave}
-      saving={saving}
-    />
+    <>
+      {props.token && props.token["tipoUsuario"] === 1 ? (
+        <>
+          <NavLink to="/tours" className="btn btn-primary">
+            Regresar
+          </NavLink>
+          <TourForm
+            tour={tour}
+            errors={errors}
+            onChange={handleChange}
+            onSave={handleSave}
+            saving={saving}
+          />
+        </>
+      ) : (
+        <Redirect to="/" />
+      )}
+    </>
   );
 }
 

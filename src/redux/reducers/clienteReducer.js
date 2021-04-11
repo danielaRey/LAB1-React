@@ -11,6 +11,8 @@ export default function clienteReducer(state = initialState.clientes, action) {
       );
     case types.LOAD_CLIENTES_SUCCESS:
       return action.clientes;
+    case types.LOAD_CLIENTE_SUCCESS:
+      return action.cliente;
     default:
       return state;
   }

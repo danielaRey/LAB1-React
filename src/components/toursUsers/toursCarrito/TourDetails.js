@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import { NavLink } from "react-router-dom";
 import TextInput from "../../common/TextInput";
+import ReactStars from "react-rating-stars-component";
 
 const TourDetails = (props) => {
   const tokenExists = localStorage.getItem("tokenmovt");
@@ -13,12 +14,11 @@ const TourDetails = (props) => {
     <>
       <Carousel infiniteLoop={true}>
         {props.fotos.map((foto) => {
-          let imgTourPath = foto.pathImagen.substring(44);
+          let imgTourPath = foto.pathImagen.substring(12);
           const srcImg = "../../../imagenes/" + imgTourPath;
           return (
             <div key={foto.id}>
               <img src={srcImg} />
-              <p className="legend">Legend 1</p>
             </div>
           );
         })}
@@ -103,7 +103,13 @@ const TourDetails = (props) => {
               marginBottom: "2px",
             }}
           >
-            <p>{review.calificacion}</p>
+            <ReactStars
+              count={5}
+              size={24}
+              value={review.calificacion}
+              edit={false}
+              activeColor="#ffd700"
+            />
             <p>
               {review.clienteNombre} - {review.comentario}
             </p>

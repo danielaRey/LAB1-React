@@ -32,9 +32,26 @@ const newCliente = {
   fechaNacimiento: null,
 };
 
+const newFoto = {
+  id: null,
+  nombre: "",
+  imagen: "",
+  pathImagen: "",
+  tourID: "",
+};
+
+const newFavorito = {
+  id: null,
+  esFavorito: 0,
+  clienteIdentificacion: "",
+  tourID: "",
+};
+
 module.exports = {
   newTour,
   newReservacion,
   newUsuario,
   newCliente,
+  newFoto,
+  newFavorito,
 };
