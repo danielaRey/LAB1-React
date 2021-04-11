@@ -36,48 +36,53 @@ const TourListCard = ({ tours, fotos, reviews, cliente, favoritos }) => {
 
   return (
     <>
-      {tours.map((tour) => {
-        return (
-          <>
-            <div
-              key={tour.id}
-              id={tour.id}
-              className="w-full sm:w-1/2 md:w-1/3 flex flex-col p-3"
-            >
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
-                <div className="bg-cover h-100  ">
-                  <TourMainImage
-                    fotos={fotos}
-                    tourID={tour.id}
-                    esFavorito={filterFavoritos(tour.id).esFavorito}
-                  />
-                </div>
-                <div className="p-4 flex-1 flex flex-col">
-                  <h3 className="mb-4 text-2xl">
-                    <Link
-                      style={{ cursor: "pointer" }}
-                      to={"/tour/details/" + tour.id}
-                    >
-                      {tour.nombre}
-                    </Link>
-                  </h3>
-                  <div className="mb-4 text-grey-darker text-sm flex-1">
-                    <p className="card-text">Duración: {tour.duracion}</p>
-                    <p className="card-text">Precio: {tour.precio}</p>
-                    <TourCalificaciones reviews={reviews} tourID={tour.id} />
+      {favoritos.length > 0 ? (
+        tours.map((tour) => {
+          return (
+            <>
+              <div
+                key={tour.id}
+                id={tour.id}
+                className="w-full sm:w-1/2 md:w-1/3 flex flex-col p-3"
+              >
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col">
+                  <div className="bg-cover h-100  ">
+                    <TourMainImage
+                      fotos={fotos}
+                      tourID={tour.id}
+                      cliente={cliente}
+                      favorito={filterFavoritos(tour.id)}
+                    />
                   </div>
-                  <a
-                    href="#"
-                    className="border-t border-grey-light pt-2 text-xs text-grey hover:text-red uppercase no-underline tracking-wide"
-                  >
-                    Twitter
-                  </a>
+                  <div className="p-4 flex-1 flex flex-col">
+                    <h3 className="mb-4 text-2xl">
+                      <Link
+                        style={{ cursor: "pointer" }}
+                        to={"/tour/details/" + tour.id}
+                      >
+                        {tour.nombre}
+                      </Link>
+                    </h3>
+                    <div className="mb-4 text-grey-darker text-sm flex-1">
+                      <p className="card-text">Duración: {tour.duracion}</p>
+                      <p className="card-text">Precio: {tour.precio}</p>
+                      <TourCalificaciones reviews={reviews} tourID={tour.id} />
+                    </div>
+                    <a
+                      href="#"
+                      className="border-t border-grey-light pt-2 text-xs text-grey hover:text-red uppercase no-underline tracking-wide"
+                    >
+                      Twitter
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </>
-        );
-      })}
+            </>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </>
   );
 };

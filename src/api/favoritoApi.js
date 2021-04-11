@@ -16,3 +16,14 @@ export function saveFavorito(favorito) {
     .then(handleResponse)
     .catch(handleError);
 }
+
+export function updateFavorito(favorito) {
+  const baseUrl = process.env.API_URL + "/api/favorito/update";
+  return fetch(baseUrl, {
+    method: "PUT", // POST for create, PUT to update when id already exists.
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(favorito),
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}

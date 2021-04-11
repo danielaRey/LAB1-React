@@ -53,7 +53,7 @@ function TourCardManage({
       });
     }
   }, [props.tours, props.favoritos]);
-  var all = document.getElementsByClassName("hryWAp");
+  var all = document.getElementsByClassName("sc-bdvvaa");
   for (var i = 0; i < all.length; i++) {
     all[i].style.height = "68px";
   }
