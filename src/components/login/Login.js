@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { handleResponse, handleError } from "../../api/apiUtils";
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login(props) {
   const [correo, setCorreo] = useState();
@@ -13,6 +14,7 @@ export default function Login(props) {
 
   function loginUser(credentials) {
     console.log(credentials);
+    debugger;
     return fetch("http://localhost:4000/api/login", {
       method: "POST", // POST for create, PUT to update when id already exists.
       headers: { "content-type": "application/json" },
@@ -22,11 +24,17 @@ export default function Login(props) {
         debugger;
         let a = data.responseText;
         data.json().then((obj) => {
-          const stringToken = JSON.stringify(obj);
-          localStorage.setItem("tokenmovt", stringToken);
-          location.reload();
-          props.history.push("/tours/search");
-          return false;
+          if (obj["token"]) {
+            const stringToken = JSON.stringify(obj);
+            localStorage.setItem("tokenmovt", stringToken);
+            location.reload();
+            props.history.push("/tours/search");
+            return false;
+          } else {
+            toast.error("Credenciales incorrectas.");
+            props.history.push("/login/");
+          }
+
           //localStorage.setItem("tokenmovt", obj);
         });
       })
