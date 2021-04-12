@@ -59,8 +59,9 @@ function App() {
         <Route path="/login" component={() => <Login token={jsonToken} />} />
         <Route
           path="/crear-cuenta"
-          component={() => <ManageCrearCuenta token={jsonToken} />}
+          render={(props) => <ManageCrearCuenta {...props} token={jsonToken} />}
         />
+
         <Route
           path="/carrito"
           render={(props) => <ManageCarrito {...props} token={jsonToken} />}

@@ -52,6 +52,15 @@ const CrearCuenta = ({
       />
 
       <TextInput
+        name="fechaNacimiento"
+        label="Fecha de Nacimiento"
+        typeInput="date"
+        value={cliente.fechaNacimiento}
+        onChange={onChange}
+        error={errors.fechaNacimiento}
+      />
+
+      <TextInput
         name="correo"
         label="Correo"
         typeInput="email"

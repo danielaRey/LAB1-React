@@ -11,6 +11,7 @@ function ManageCrearCuenta({
   loadClientes,
   saveCliente,
   saveUsuario,
+  history,
   ...props
 }) {
   const [cliente, setCliente] = useState(newCliente);
@@ -45,7 +46,7 @@ function ManageCrearCuenta({
       nombre,
       apellidos,
       pais,
-      correo,
+      usuarioCorreo,
       password,
     } = cliente;
     const errors = {};
@@ -54,7 +55,7 @@ function ManageCrearCuenta({
     if (!identificacion) errors.identificacion = "Identificación es requerida";
     if (!nombre) errors.nombre = "Nombre es requerido.";
     if (!apellidos) errors.apellidos = "Apellido es requerido";
-    if (!correo) errors.correo = "Correo es requerido.";
+    if (!usuarioCorreo) errors.usuarioCorreo = "Correo es requerido.";
     if (!password) {
       passworErrors = "Contraseña es requerida.";
     } else {
@@ -77,8 +78,9 @@ function ManageCrearCuenta({
       }
     }
     ///^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/
-
-    errors.password = passworErrors;
+    if (errors.password) {
+      errors.password = passworErrors;
+    }
 
     setErrors(errors);
     // Form is valid if the errors object still has no properties
@@ -88,15 +90,13 @@ function ManageCrearCuenta({
   function handleSave(event) {
     event.preventDefault();
     if (!formIsValid()) return;
-    const usuarioCorreo = usuario.correo;
-    //if (!formIsValid()) return;
     setSaving(true);
     saveUsuario(usuario)
       .then(() => {
         saveCliente(cliente)
           .then(() => {
             toast.success("Cuenta registrada exitosamente.");
-            props.history.push("/");
+            history.push("/");
           })
           .catch((error) => {
             setSaving(false);
@@ -132,6 +132,7 @@ ManageCrearCuenta.propTypes = {
   reservacion: PropTypes.object,
   saveCliente: PropTypes.func.isRequired,
   saveUsuario: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 //what part pf the state is passed to our components via props
