@@ -70,7 +70,6 @@ const TourMainImage = (props) => {
         style={{ float: "right", width: "60%" }}
         className="card-img-top"
         src={srcImg}
-        alt={fotoTour.nombre}
       ></img>
     </div>
   );

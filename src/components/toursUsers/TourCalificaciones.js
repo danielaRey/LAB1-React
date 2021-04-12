@@ -35,6 +35,7 @@ const TourCalificaciones = (props) => {
           value={cantidadEstrellasTourID()}
           edit={false}
           activeColor="#ffd700"
+          isHalf={true}
         />
         {"calificación: "}
         {cantidadEstrellasTourID()}
