@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import HomePage from "./home/HomePage";
 import AboutPage from "./about/AboutPage";
 import Header from "./common/Header";
 import PageNotFound from "./PageNotFound";
