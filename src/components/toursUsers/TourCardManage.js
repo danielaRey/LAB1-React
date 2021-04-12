@@ -121,8 +121,8 @@ function mapStateToProps(state, ownProps) {
   const filtered = state.tours.filter((tour) => {
     if (tour.pais) {
       return (
-        tour.pais.toLowerCase().includes(pais.toLowerCase()) ||
-        tour.fechaIda === ida ||
+        tour.pais.toLowerCase().includes(pais.toLowerCase()) &&
+        tour.fechaIda === ida &&
         tour.fechaVuelta === vuelta
       );
     }
